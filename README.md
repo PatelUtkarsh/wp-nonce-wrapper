@@ -6,7 +6,7 @@ Use WordPress Nonce an object oriented way
 ##Installation:
 
 ```
-"spock/wp-nonce-wrapper": "0.5"
+"spock/wp-nonce-wrapper": "0.2"
 ```
 
 to your composer.json file and run a `composer update`
