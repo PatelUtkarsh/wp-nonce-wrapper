@@ -1,0 +1,10 @@
+{
+  "name": "spock/wp-nonce-wrapper",
+  "description": "Use WordPress Nonce a object oriented way",
+  "authors": [
+    {
+      "name": "Spock",
+      "email": "itismeutkarsh@gmail.com"
+    }
+  ]
+}
