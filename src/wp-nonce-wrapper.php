@@ -100,7 +100,7 @@ if ( ! class_exists( 'Wp_Nonce_Wrapper' ) ) :
 		}
 
 		/**
-		 * Check admin referral
+		 * Check user is coming from another admin page
 		 *
 		 * @param int|string $action Action nonce.
 		 * @param string $query_arg Optional. Key to check for nonce in `$_REQUEST` (since 2.5).
