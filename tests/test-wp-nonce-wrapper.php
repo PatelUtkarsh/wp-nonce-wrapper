@@ -36,9 +36,9 @@ class test_wp_nonce_wrapper extends WP_UnitTestCase {
 		$dom              = new DOMDocument();
 		//Load html field to get value from it.
 		$dom->loadHTML( $html_input_field );
-		$inputs = $dom->getElementsByTagName( 'input' );
-		if ( ! empty( $inputs[0] ) ) {
-			$nonce = $inputs[0]->getAttribute( 'value' );
+		$inputs = $dom->getElementsByTagName( 'input' )->item(0);
+		if ( ! empty( $inputs ) ) {
+			$nonce = $inputs->getAttribute( 'value' );
 			//verify
 			$this->assertEquals( $this->instance->verify_nonce( $nonce, 'clean_field' ), 1 );
 		}
