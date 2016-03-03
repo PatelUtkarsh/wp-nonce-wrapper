@@ -103,7 +103,7 @@ if ( ! class_exists( 'Wp_Nonce_Wrapper' ) ) :
 		 * Check user is coming from another admin page
 		 *
 		 * @param int|string $action Action nonce.
-		 * @param string $query_arg Optional. Key to check for nonce in `$_REQUEST` (since 2.5).
+		 * @param string $query_arg Optional. Key to check for nonce in `$_REQUEST`.
 		 *                              Default '_wpnonce'.
 		 *
 		 * @return false|int False if the nonce is invalid, 1 if the nonce is valid and generated between
@@ -111,6 +111,28 @@ if ( ! class_exists( 'Wp_Nonce_Wrapper' ) ) :
 		 */
 		public function check_admin_referral( $action = - 1, $query_arg = '_wpnonce' ) {
 			return check_admin_referer( $action, $query_arg );
+		}
+
+		/**
+		 * Check ajax referer
+		 *
+		 * @param int $action
+		 * @param bool $query_arg
+		 * @param bool $die
+		 *
+		 * @return false|int
+		 */
+		public function check_ajax_referer( $action = - 1, $query_arg = false, $die = true ) {
+			return check_ajax_referer( $action, $query_arg, $die );
+		}
+
+		/**
+		 * Display 'Are You Sure' message to confirm the action being taken.
+		 *
+		 * @param $action
+		 */
+		public function wp_nonce_ays( $action ) {
+			wp_nonce_ays( $action );
 		}
 
 	}
