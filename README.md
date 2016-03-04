@@ -20,16 +20,16 @@ composer require spock/wp-nonce-wrapper
 
 Get Nonce:
 ```php
-$instance = Wp_Nonce_Wrapper::getInstance();
-$nonce = $instance->create_nonce( "doing_some_form_job" );
+$nonce_obj = new Nonce_Wrapper('doing_some_form_job');
+$nonce = $nonce_obj->create_nonce();
 ```
 
 Verify Nonce:
 
 ```php
 $nonce = $_REQUEST['nonce'];
-$instance = Wp_Nonce_Wrapper::getInstance();
-if ($instance->verify_nonce( $nonce, "doing_some_form_job" ))
+$nonce_obj = new Nonce_Wrapper('doing_some_form_job');
+if ( $nonce_obj->verify_nonce( $nonce ) )
     //Verified Source 
 else 
     // Unknown Source
@@ -39,19 +39,19 @@ Create nonce input field:
 
 ```php
 //This will echo input field
-create_nonce_field( 'clean_field');
+$nonce_obj->create_nonce_field();
 ```
 
 Create nonce url 
 ```php
-$url   = $this->instance->create_nonce_url( "http://w.org", 'clean_url' );
+$url   = $nonce_obj->create_nonce_url( 'http://w.org' );
 ```
 
 Check user is coming from another admin page.
  
  ```php
  // This will check current url 
- if ($this->instance->check_admin_referral( 'clean_url' ))
+ if ($nonce_obj->check_admin_referral())
     //doing it right
  else 
     //doing it wrong
