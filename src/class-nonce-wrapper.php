@@ -23,15 +23,6 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		}
 
 		/**
-		 * Returns the new instance of this class.
-		 *
-		 * @return Nonce_Wrapper The *Singleton* instance.
-		 */
-		public static function getInstance() {
-			return new self();
-		}
-
-		/**
 		 * Create nonce
 		 * @return string
 		 *
