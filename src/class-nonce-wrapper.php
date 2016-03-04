@@ -23,7 +23,7 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		}
 
 		/**
-		 * Returns the *Singleton* instance of this class.
+		 * Returns the new instance of this class.
 		 *
 		 * @return Nonce_Wrapper The *Singleton* instance.
 		 */
@@ -108,6 +108,14 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		 */
 		public function nonce_ays( $action ) {
 			\wp_nonce_ays( $action );
+		}
+
+		/**
+		 * Get the time-dependent variable for nonce creation.
+		 * @return integer
+		 */
+		public function nonce_tick() {
+			return wp_nonce_tick();
 		}
 
 	}
