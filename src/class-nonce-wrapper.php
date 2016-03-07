@@ -13,13 +13,27 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		 */
 		private $action;
 
+		private $expire;
+
 		/**
 		 * Nonce_Wrapper constructor.
 		 *
 		 * @param int|string $action
+		 * @param int $expire Life of nonce in second, default seconds in one day
 		 */
-		function __construct( $action = - 1 ) {
+		function __construct( $action = - 1, $expire = 86400 ) {
 			$this->action = $action;
+			$this->expire = $expire;
+		}
+
+		/**
+		 *
+		 * @param $expire
+		 *
+		 * @return int
+		 */
+		function set_expire( $expire ) {
+			return $this->expire;
 		}
 
 		/**
@@ -27,9 +41,20 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		 * @return string
 		 *
 		 */
-		public function create_nonce() {
+		protected function create_nonce() {
 			return \wp_create_nonce( $this->action );
 		}
+
+		public function __call( $name, $arguments ) {
+			if ( method_exists( $this, $name ) ) {
+				add_filter( 'nonce_life', array( $this, 'set_expire' ), 1 );
+				$return = call_user_func_array( array( $this, $name ), $arguments );
+				remove_filter( 'nonce_life', array( $this, 'set_expire' ), 1 );
+
+				return $return;
+			}
+		}
+
 
 		/**
 		 * Verify nonce
@@ -38,7 +63,7 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		 *
 		 * @return false|int
 		 */
-		public function verify_nonce( $nonce ) {
+		protected function verify_nonce( $nonce ) {
 			return \wp_verify_nonce( $nonce, $this->action );
 		}
 
@@ -51,7 +76,7 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		 *
 		 * @return string Nonce field HTML markup.
 		 */
-		public function create_nonce_field( $name = '_wpnonce', $referer = true, $echo = true ) {
+		protected function create_nonce_field( $name = '_wpnonce', $referer = true, $echo = true ) {
 			return \wp_nonce_field( $this->action, $name, $referer, $echo );
 		}
 
@@ -63,7 +88,7 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		 *
 		 * @return string Escaped URL with nonce action added.
 		 */
-		public function create_nonce_url( $actionurl, $name = '_wpnonce' ) {
+		protected function create_nonce_url( $actionurl, $name = '_wpnonce' ) {
 			return \wp_nonce_url( $actionurl, $this->action, $name );
 		}
 
@@ -76,7 +101,7 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		 * @return false|int False if the nonce is invalid, 1 if the nonce is valid and generated between
 		 *                   0-12 hours ago, 2 if the nonce is valid and generated between 12-24 hours ago.
 		 */
-		public function check_admin_referral( $query_arg = '_wpnonce' ) {
+		protected function check_admin_referral( $query_arg = '_wpnonce' ) {
 			return \check_admin_referer( $this->action, $query_arg );
 		}
 
@@ -88,7 +113,7 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		 *
 		 * @return false|int
 		 */
-		public function check_ajax_referer( $query_arg = false, $die = true ) {
+		protected function check_ajax_referer( $query_arg = false, $die = true ) {
 			return \check_ajax_referer( $this->action, $query_arg, $die );
 		}
 
@@ -97,7 +122,7 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		 *
 		 * @param $action
 		 */
-		public function nonce_ays( $action ) {
+		protected function nonce_ays( $action ) {
 			\wp_nonce_ays( $action );
 		}
 
@@ -105,7 +130,7 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		 * Get the time-dependent variable for nonce creation.
 		 * @return integer
 		 */
-		public function nonce_tick() {
+		protected function nonce_tick() {
 			return wp_nonce_tick();
 		}
 
