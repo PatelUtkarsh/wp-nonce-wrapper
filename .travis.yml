@@ -10,7 +10,6 @@ php:
   - 7.0
 
 cache:
-  -apt
   directories:
       - $HOME/.composer/cache
 
