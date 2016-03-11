@@ -37,6 +37,13 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		}
 
 		/**
+		 * @return Nonce_Wrapper
+		 */
+		public function get_action() {
+			return $this->action;
+		}
+
+		/**
 		 * Create nonce
 		 * @return string
 		 *
@@ -64,7 +71,7 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		 * @return false|int
 		 */
 		protected function verify_nonce( $nonce ) {
-			return \wp_verify_nonce( $nonce, $this->action );
+			return \wp_verify_nonce( $nonce, $this->get_action() );
 		}
 
 		/**
@@ -77,7 +84,7 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		 * @return string Nonce field HTML markup.
 		 */
 		protected function create_nonce_field( $name = '_wpnonce', $referer = true, $echo = true ) {
-			return \wp_nonce_field( $this->action, $name, $referer, $echo );
+			return \wp_nonce_field( $this->get_action(), $name, $referer, $echo );
 		}
 
 		/**
@@ -89,7 +96,7 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		 * @return string Escaped URL with nonce action added.
 		 */
 		protected function create_nonce_url( $actionurl, $name = '_wpnonce' ) {
-			return \wp_nonce_url( $actionurl, $this->action, $name );
+			return \wp_nonce_url( $actionurl, $this->get_action(), $name );
 		}
 
 		/**
@@ -102,7 +109,7 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		 *                   0-12 hours ago, 2 if the nonce is valid and generated between 12-24 hours ago.
 		 */
 		protected function check_admin_referral( $query_arg = '_wpnonce' ) {
-			return \check_admin_referer( $this->action, $query_arg );
+			return \check_admin_referer( $this->get_action(), $query_arg );
 		}
 
 		/**
@@ -114,16 +121,14 @@ if ( ! class_exists( 'Nonce_Wrapper' ) ) :
 		 * @return false|int
 		 */
 		protected function check_ajax_referer( $query_arg = false, $die = true ) {
-			return \check_ajax_referer( $this->action, $query_arg, $die );
+			return \check_ajax_referer( $this->get_action(), $query_arg, $die );
 		}
 
 		/**
 		 * Display 'Are You Sure' message to confirm the action being taken.
-		 *
-		 * @param $action
 		 */
-		protected function nonce_ays( $action ) {
-			\wp_nonce_ays( $action );
+		protected function nonce_ays() {
+			\wp_nonce_ays( $this->get_action() );
 		}
 
 		/**
