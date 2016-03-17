@@ -1,6 +1,6 @@
 {
   "name": "spock/wp-nonce-wrapper",
-  "description": "Use WordPress Nonce a object oriented way",
+  "description": "Simplified WordPress nonce usage",
   "autoload": {
     "files": ["src/class-nonce-wrapper.php"]
   },

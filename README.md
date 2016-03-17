@@ -6,7 +6,7 @@ Use WordPress Nonce an object oriented way
 ##Installation:
 
 ```
-"spock/wp-nonce-wrapper": "0.3"
+"spock/wp-nonce-wrapper": "0.4"
 ```
 
 to your composer.json file and run a `composer update`
@@ -21,7 +21,7 @@ composer require spock/wp-nonce-wrapper
 Get Nonce with expiry:
 ```php
 use spock\helper\Nonce_Wrapper;
-$nonce_obj = new Nonce_Wrapper('doing_some_form_job', 60*60); // 1 hr as it is expecting it to pass in seconds note that default is 1 day.
+$nonce_obj = new Nonce_Wrapper('doing_some_form_job', 60*60); // 60 sec * 60 min = 1hr; Note: default is 1 day.
 $nonce = $nonce_obj->create_nonce();
 ```
 
@@ -60,6 +60,11 @@ Check user is coming from another admin page.
  
  
 ##Changelog 
+
+### 0.4 ###
+* Remove php magic method usage
+* Refactor code
+* Improved documentation
 
 ### 0.3 ###
 * Nonce expire control added
