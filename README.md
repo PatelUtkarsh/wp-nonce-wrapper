@@ -3,7 +3,7 @@ Use WordPress Nonce an object oriented way
 
 [![Build Status](https://travis-ci.org/PatelUtkarsh/wp-nonce-wrapper.svg?branch=master)](https://travis-ci.org/PatelUtkarsh/wp-nonce-wrapper)
 
-##Installation:
+## Installation:
 
 ```
 "spock/wp-nonce-wrapper": "0.4"
@@ -16,7 +16,7 @@ Or
 composer require spock/wp-nonce-wrapper
 ```
 
-##Usage:
+## Usage:
 
 Get Nonce with expiry:
 ```php
@@ -59,7 +59,7 @@ Check user is coming from another admin page.
  ```
  
  
-##Changelog 
+## Changelog
 
 ### 0.4 ###
 * Remove php magic method usage
